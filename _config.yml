@@ -1,3 +1,11 @@
 plugins:
   - jekyll-remote-theme
 remote_theme: thelehhman/plainwhite-jekyll
+
+plainwhite:
+  name: Jan Škoruba
+  tagline: Developer
+  date_format: "%b %-d, %Y"
+
+  social_links:
+    github: skoruba
