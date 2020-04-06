@@ -6,6 +6,6 @@ plainwhite:
   name: Jan Škoruba
   tagline: Developer
   date_format: "%b %-d, %Y"
-
+  sitemap: true
   social_links:
     github: skoruba
