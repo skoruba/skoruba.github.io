@@ -8,5 +8,6 @@ plainwhite:
   date_format: "%b %-d, %Y"
   sitemap: true
   dark_mode: true
+  portfolio_image: "assets/portfolio.png"
   social_links:
     github: skoruba
