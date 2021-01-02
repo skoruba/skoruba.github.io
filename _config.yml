@@ -7,5 +7,6 @@ plainwhite:
   tagline: Developer
   date_format: "%b %-d, %Y"
   sitemap: true
+  darkmode: true
   social_links:
     github: skoruba
