@@ -11,8 +11,6 @@ const App = () => {
   return (
     <>
       <div className="relative overflow-hidden">
-        <Background />
-
         <Popover className="relative pt-6 pb-16 sm:pb-24">
           {({ open }) => (
             <>
