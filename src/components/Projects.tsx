@@ -1,5 +1,5 @@
-import posts from '../data/projects.json';
-import { FingerPrintIcon } from '@heroicons/react/outline';
+import posts from "../data/projects.json";
+import { FingerPrintIcon } from "@heroicons/react/outline";
 
 const Projects = () => {
   return (
@@ -17,7 +17,7 @@ const Projects = () => {
             applications.
           </div>
           <div className="mt-3 text-1xl tracking-tight font-extrabold text-gray-600 sm:text-1xl">
-            2 milions downloads of my{' '}
+            4 milions downloads of my{" "}
             <a
               className="text-blue-600"
               target="_blank"
@@ -29,7 +29,7 @@ const Projects = () => {
           </div>
         </div>
       </div>
-      <div className="mt-8 max-w-lg mx-auto grid gap-5 lg:grid-cols-2 lg:max-w-none">
+      <div className="mt-8 max-w-lg mx-auto grid gap-5 lg:grid-cols-3 lg:max-w-none">
         {posts.map((post) => (
           <div
             key={post.title}

@@ -1,23 +1,28 @@
-import jan from '../images/jan.png';
+import jan from "../images/jan.png";
 
 const Main = () => {
   return (
     <main className="mt-16 mx-auto max-w-7xl px-4 sm:mt-12">
       <div className="text-center">
         <div className="mb-3">
-          <img alt="Jan Skoruba" src={jan} className="mx-auto w-36" />
+          <img
+            alt="Jan Skoruba"
+            src={jan}
+            className="personal-img mx-auto w-36"
+          />
         </div>
         <h1 className="text-4xl tracking-tight font-extrabold text-blue-600 sm:text-5xl md:text-6xl">
           Jan Škoruba
         </h1>
         <h2 className="mt-3 text-4xl tracking-tight font-extrabold text-gray-900 sm:text-3xl md:text-4xl">
-          Software Developer & Identity Consultant
+          Software Developer & Identity Specialist
         </h2>
 
         <p className="mt-3 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
-          I focus on programming web applications using React and web APIs using
-          .NET. <br />I am interested in identity and access management <br />{' '}
-          (OpenID Connect & OAuth 2 protocols).
+          I am an experienced software developer with a focus on building web
+          applications using React and designing web APIs with .NET. <br />
+          <br /> My expertise extends to identity and access management, where I
+          specialize in the OpenID Connect and OAuth 2.0 protocols.
         </p>
         <div className="mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
           <div className="rounded-md shadow">
