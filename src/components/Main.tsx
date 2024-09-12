@@ -8,7 +8,7 @@ const Main = () => {
           <img
             alt="Jan Skoruba"
             src={jan}
-            className="personal-img mx-auto w-36"
+            className="personal-img mx-auto w-48"
           />
         </div>
         <h1 className="text-4xl tracking-tight font-extrabold text-blue-600 sm:text-5xl md:text-6xl">
