@@ -17,7 +17,7 @@ const Projects = () => {
             applications.
           </div>
           <div className="mt-3 text-1xl tracking-tight font-extrabold text-gray-600 sm:text-1xl">
-            4 milions downloads of my{" "}
+            5 milions downloads of my{" "}
             <a
               className="text-blue-600"
               target="_blank"

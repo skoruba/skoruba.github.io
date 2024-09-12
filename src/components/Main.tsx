@@ -15,14 +15,14 @@ const Main = () => {
           Jan Škoruba
         </h1>
         <h2 className="mt-3 text-4xl tracking-tight font-extrabold text-gray-900 sm:text-3xl md:text-4xl">
-          Software Developer & Identity Specialist
+          Software Developer & Identity Enthusiast
         </h2>
 
         <p className="mt-3 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
           I am an experienced software developer with a focus on building web
           applications using React and designing web APIs with .NET. <br />
-          <br /> My expertise extends to identity and access management, where I
-          specialize in the OpenID Connect and OAuth 2.0 protocols.
+          <br /> My expertise includes identity and access management, with a
+          keen interest in OpenID Connect and OAuth protocols.
         </p>
         <div className="mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
           <div className="rounded-md shadow">
