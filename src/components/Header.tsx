@@ -1,49 +1,46 @@
-import { Popover } from "@headlessui/react";
-import { Menu, Github } from "lucide-react";
+import { Github } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 import Logo from "../images/logo.svg";
+import Icon from "../images/icon.svg";
+
+const nav = [
+  { name: "Projects", href: "#projects" },
+  { name: "Contact", href: "#contact" },
+];
 
 const Header = () => {
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6">
-      <nav
-        className="relative flex items-center justify-between sm:h-10 md:justify-center"
-        aria-label="Global"
-      >
-        <div className="flex items-center flex-1 md:absolute md:inset-y-0 md:left-0">
-          <div className="flex items-center justify-between w-full md:w-auto">
-            <a href="/" className="flex items-center">
-              <img
-                className="h-8 w-auto sm:h-10"
-                src={Logo}
-                alt="Jan Škoruba"
-              />
-            </a>
+    <header className="sticky top-0 z-30 border-b border-slate-200/70 bg-slate-50/80 backdrop-blur-md dark:border-slate-800/70 dark:bg-slate-950/70">
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
+        <a href="/" className="flex items-center" aria-label="Jan Škoruba – home">
+          <img src={Logo} alt="Jan Škoruba" className="hidden h-8 w-auto sm:block" />
+          <img src={Icon} alt="Jan Škoruba" className="h-8 w-auto sm:hidden" />
+        </a>
 
-            <div className="-mr-2 flex items-center md:hidden gap-2">
-              <ThemeToggle />
-              <Popover.Button className="bg-gray-100 dark:bg-gray-800 rounded-md p-2 inline-flex items-center justify-center text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 transition-colors">
-                <span className="sr-only">Open main menu</span>
-                <Menu className="h-6 w-6" aria-hidden="true" />
-              </Popover.Button>
-            </div>
-          </div>
-        </div>
-        <div className="hidden md:absolute md:flex md:items-center md:justify-end md:inset-y-0 md:right-0 gap-3">
-          <ThemeToggle />
-          <span className="inline-flex rounded-md shadow-sm">
+        <nav aria-label="Primary" className="flex items-center gap-1 sm:gap-2">
+          {nav.map((item) => (
             <a
-              href="https://github.com/skoruba"
-              target="_blank"
-              className="inline-flex items-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-600 text-base font-medium rounded-md text-blue-600 dark:text-blue-400 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200"
-              rel="noreferrer"
+              key={item.name}
+              href={item.href}
+              className="rounded-lg px-2.5 py-1.5 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-200/60 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white sm:px-3"
             >
-              <Github className="w-5 h-5" /> Github
+              {item.name}
             </a>
-          </span>
-        </div>
-      </nav>
-    </div>
+          ))}
+          <span className="mx-1 hidden h-5 w-px bg-slate-200 dark:bg-slate-800 sm:block" />
+          <ThemeToggle />
+          <a
+            href="https://github.com/skoruba"
+            target="_blank"
+            rel="noreferrer"
+            className="ml-1 hidden items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-800 transition-colors hover:border-blue-400 hover:text-blue-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:border-blue-500 dark:hover:text-blue-300 md:inline-flex"
+          >
+            <Github className="h-4 w-4" />
+            GitHub
+          </a>
+        </nav>
+      </div>
+    </header>
   );
 };
 

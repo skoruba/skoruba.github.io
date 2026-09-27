@@ -3,17 +3,20 @@ import { useTheme } from "../contexts/ThemeContext";
 
 const ThemeToggle = () => {
   const { theme, toggleTheme } = useTheme();
+  const next = theme === "light" ? "dark" : "light";
 
   return (
     <button
+      type="button"
       onClick={toggleTheme}
-      className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
-      aria-label="Toggle theme"
+      className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-slate-600 transition-colors hover:bg-slate-200/60 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
+      aria-label={`Switch to ${next} theme`}
+      title={`Switch to ${next} theme`}
     >
       {theme === "light" ? (
-        <Moon className="w-5 h-5 text-gray-800 dark:text-gray-200" />
+        <Moon className="h-[18px] w-[18px]" />
       ) : (
-        <Sun className="w-5 h-5 text-gray-800 dark:text-gray-200" />
+        <Sun className="h-[18px] w-[18px]" />
       )}
     </button>
   );

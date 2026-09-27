@@ -1,20 +1,36 @@
 [
   {
+    "name": "Duende.IdentityServer.Admin",
     "title": "Duende IdentityServer Admin UI",
     "href": "https://github.com/skoruba/Duende.IdentityServer.Admin",
-    "category": { "name": "Identity and Access Control", "href": "#" },
-    "description": "The popular OSS version of administration for the Duende IdentityServer and Asp.Net Core Identity"
+    "description": "React and TypeScript administration UI with a .NET API for Duende IdentityServer and ASP.NET Core Identity. Manage clients, resources, users, roles, claims and persisted grants.",
+    "stack": "React · TypeScript · .NET 10",
+    "stars": 719
   },
   {
+    "name": "IdentityServer4.Admin",
+    "title": "IdentityServer4 Admin UI",
+    "href": "https://github.com/skoruba/IdentityServer4.Admin",
+    "description": "The original admin UI for IdentityServer4. Archived after IdentityServer4 reached end of life; superseded by the Duende version.",
+    "stack": "ASP.NET Core · EF Core",
+    "status": "archived",
+    "stars": 3574
+  },
+  {
+    "name": "AuditLogging",
     "title": "Audit Logging for .NET",
     "href": "https://github.com/skoruba/AuditLogging",
-    "category": { "name": "Auditing & Logging", "href": "#" },
-    "description": "Simple audit logging for .NET with support for Entity Framework"
+    "description": "Small audit logging library for .NET with an Entity Framework Core sink. Used by the admin UI to record configuration changes.",
+    "stack": ".NET · EF Core",
+    "stars": 121
   },
   {
-    "title": "React OIDC Client JS template",
+    "name": "react-oidc-client-js",
+    "title": "React OIDC client template",
     "href": "https://github.com/skoruba/react-oidc-client-js",
-    "category": { "name": "React template", "href": "#" },
-    "description": "OpenID Connect (OIDC) client with React and typescript"
+    "description": "Reference OpenID Connect client in React and TypeScript using oidc-client-js. Authorization Code flow with PKCE.",
+    "stack": "React · TypeScript",
+    "status": "archived",
+    "stars": 176
   }
 ]

@@ -1,60 +1,23 @@
-![Logo](https://raw.githubusercontent.com/skoruba/IdentityServer4.Admin/master/docs/Images/Skoruba.IdentityServer4.Admin-Logo-ReadMe.png)
+# skoruba.com
 
-# 🍕 Skoruba.com
+Personal site of Jan Škoruba, Identity Engineer. Single page: intro, areas of work, open source projects, contact.
 
-> My personal website - Built with React, TypeScript, Vite, and Tailwind CSS
+Built with React 18, TypeScript, Vite and Tailwind CSS. The site does not use analytics. A restrictive CSP is supplied as HTML metadata; use response-header policies when deploying behind a CDN or proxy.
 
-## ✨ Features
-
-- ⚡️ **Vite** - Lightning fast build tool
-- ⚛️ **React 18** - Latest React features
-- 🎨 **Tailwind CSS** - Utility-first CSS framework
-- 🌙 **Dark Mode** - Full dark mode support with smooth transitions
-- 🎯 **TypeScript** - Type safety and better DX
-- 🎭 **Lucide Icons** - Beautiful icon library
-- 📱 **Responsive** - Mobile-first design
-- ✨ **Animations** - Smooth animations and transitions
-
-## 🚀 Getting Started
-
-### Development
+## Development
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173) to view it in the browser.
-
-### Build
+## Build and deploy
 
 ```bash
-npm run build
+npm run build     # output in dist/
+npm run deploy    # publishes dist/ to GitHub Pages with CNAME skoruba.com
 ```
 
-### Preview
-
-```bash
-npm run preview
-```
-
-## 📦 Deployment
-
-```bash
-npm run deploy
-```
-
-This will build the project and deploy it to GitHub Pages with custom domain `skoruba.com`.
-
-## 🛠️ Tech Stack
-
-- **React 18.3** - UI library
-- **TypeScript 5.6** - Type safety
-- **Vite 5.4** - Build tool
-- **Tailwind CSS 3.4** - Styling
-- **Lucide React** - Icons
-- **Headless UI** - Accessible components
-
-## 📄 License
+## License
 
 MIT © Jan Škoruba

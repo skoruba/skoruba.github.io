@@ -1,51 +1,37 @@
-import { Github, Linkedin, Twitter, Heart } from "lucide-react";
+import { Github, Linkedin, Twitter } from "lucide-react";
+import Icon from "../images/icon.svg";
+
+const social = [
+  { label: "GitHub", href: "https://github.com/skoruba", icon: Github },
+  { label: "LinkedIn", href: "https://linkedin.com/in/skoruba", icon: Linkedin },
+  { label: "X", href: "https://x.com/skoruba", icon: Twitter },
+];
 
 const Footer = () => {
-  const currentYear = new Date().getFullYear();
+  const year = new Date().getFullYear();
 
   return (
-    <footer className="relative bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 mt-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="text-center md:text-left">
-            <p className="text-gray-600 dark:text-gray-400 flex items-center gap-2">
-              Made with <Heart className="w-4 h-4 text-red-500 fill-current" />{" "}
-              by Jan Škoruba
-            </p>
-            <p className="text-sm text-gray-500 dark:text-gray-500 mt-1">
-              © {currentYear} All rights reserved
-            </p>
-          </div>
-
-          <div className="flex gap-4">
+    <footer className="border-t border-slate-200/70 bg-white/60 dark:border-slate-800/70 dark:bg-slate-950/60">
+      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 py-8 sm:flex-row sm:px-6">
+        <div className="flex items-center gap-3">
+          <img src={Icon} alt="" className="h-6 w-auto" />
+          <p className="text-sm text-slate-500 dark:text-slate-400">
+            © {year} Jan Škoruba · Identity Engineer
+          </p>
+        </div>
+        <div className="flex gap-2">
+          {social.map(({ label, href, icon: SocialIcon }) => (
             <a
-              href="https://github.com/skoruba"
+              key={label}
+              href={href}
               target="_blank"
               rel="noreferrer"
-              className="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
-              aria-label="GitHub"
+              aria-label={label}
+              className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-600 transition-colors hover:border-blue-400 hover:text-blue-600 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-400 dark:hover:border-blue-500 dark:hover:text-blue-300"
             >
-              <Github className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+              <SocialIcon className="h-4 w-4" />
             </a>
-            <a
-              href="https://twitter.com/skoruba"
-              target="_blank"
-              rel="noreferrer"
-              className="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
-              aria-label="Twitter"
-            >
-              <Twitter className="w-5 h-5 text-gray-700 dark:text-gray-300" />
-            </a>
-            <a
-              href="https://linkedin.com/in/skoruba"
-              target="_blank"
-              rel="noreferrer"
-              className="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
-              aria-label="LinkedIn"
-            >
-              <Linkedin className="w-5 h-5 text-gray-700 dark:text-gray-300" />
-            </a>
-          </div>
+          ))}
         </div>
       </div>
     </footer>

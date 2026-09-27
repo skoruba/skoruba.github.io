@@ -1,107 +1,69 @@
-import posts from "../data/projects.json";
-import { ExternalLink, Github, TrendingUp } from "lucide-react";
-import { useNuGetStats } from "../hooks/useNuGetStats";
-
-const categoryIcons: { [key: string]: any } = {
-  "Identity and Access Control": "🔐",
-  "Auditing & Logging": "📝",
-  "React template": "⚛️",
-};
+import { ArrowUpRight, Star } from "lucide-react";
+import projects from "../data/projects.json";
+import SectionHeading from "./SectionHeading";
+import Card from "./Card";
+import { useGitHubStars } from "../hooks/useGitHubStars";
 
 const Projects = () => {
-  const { totalDownloads, loading } = useNuGetStats("skoruba");
-
-  // Format number with commas
-  const formatNumber = (num: number): string => {
-    return num.toLocaleString("en-US");
-  };
+  const stars = useGitHubStars(
+    "skoruba",
+    projects.map((project) => project.name)
+  );
 
   return (
-    <div className="relative max-w-7xl mx-auto">
-      <div className="text-center mb-16">
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 mb-4">
-          <Github className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-          <span className="text-sm font-medium text-blue-600 dark:text-blue-400">
-            Open Source Projects
-          </span>
-        </div>
+    <section className="py-16 sm:py-20">
+      <SectionHeading
+        id="projects"
+        title="Projects"
+        description="Open-source tools for IdentityServer and ASP.NET Core Identity."
+      />
 
-        <h2
-          id="projects"
-          className="text-4xl sm:text-5xl tracking-tight font-extrabold text-gray-900 dark:text-white"
-        >
-          Featured Projects
-        </h2>
+      <div className="grid gap-5 md:grid-cols-2">
+        {projects.map((p) => {
+          const archived = p.status === "archived";
+          const starCount = stars[p.name] ?? p.stars;
+          return (
+            <div key={p.name} className="h-full min-w-0">
+              <Card href={p.href} className="flex h-full flex-col p-6">
+                <div className="flex flex-col-reverse gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
+                  <h3 className="min-w-0 text-lg font-bold text-slate-900 transition-colors group-hover:text-blue-600 dark:text-white dark:group-hover:text-blue-300">
+                    {p.title}
+                    <ArrowUpRight className="ml-1 inline h-4 w-4 align-[-0.1em] text-slate-400 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-blue-500" />
+                  </h3>
+                  <div className="flex shrink-0 items-center gap-2 pt-0.5">
+                    {archived && (
+                      <span className="rounded-full border border-slate-200 bg-slate-100 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400">
+                        Archived
+                      </span>
+                    )}
+                    <span className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white px-2.5 py-0.5 text-xs font-semibold tabular-nums text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200">
+                      <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
+                      {starCount.toLocaleString("en-US")}
+                    </span>
+                  </div>
+                </div>
 
-        <p className="mt-4 max-w-2xl mx-auto text-lg text-gray-600 dark:text-gray-400">
-          Open source projects helping developers build secure and scalable
-          applications
-        </p>
+                <p className="mt-2 flex-1 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                  {p.description}
+                </p>
 
-        <div className="mt-8 inline-flex items-center gap-3 px-6 py-4 bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-2xl border border-blue-200 dark:border-blue-800">
-          <TrendingUp className="w-6 h-6 text-blue-500" />
-          <div className="text-left">
-            <div className="text-3xl font-bold text-blue-500">
-              {loading ? (
-                <span className="animate-pulse">Loading...</span>
-              ) : (
-                <>{formatNumber(totalDownloads)}+</>
-              )}
+                <div className="mt-5 flex flex-wrap gap-1.5">
+                  {p.stack.split(" · ").map((tech) => (
+                    <span
+                      key={tech}
+                      className="rounded-md bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-300"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+
+              </Card>
             </div>
-            <div className="text-sm text-gray-600 dark:text-gray-400">
-              Total NuGet Downloads
-            </div>
-          </div>
-        </div>
+          );
+        })}
       </div>
-
-      <div className="grid gap-8 lg:grid-cols-3 lg:max-w-none">
-        {posts.map((post, index) => (
-          <div
-            key={post.title}
-            className="group relative flex flex-col rounded-2xl overflow-hidden bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-400 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/20 hover:-translate-y-2 animate-slide-up"
-            style={{ animationDelay: `${index * 0.1}s` }}
-          >
-            {/* Category Badge */}
-            <div className="absolute top-4 right-4 z-10">
-              <span className="text-2xl">
-                {categoryIcons[post.category.name] || "📦"}
-              </span>
-            </div>
-
-            <div className="flex-1 p-6">
-              <div className="mb-4">
-                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800">
-                  {post.category.name}
-                </span>
-              </div>
-
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                {post.title}
-              </h3>
-
-              <p className="text-base text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
-                {post.description}
-              </p>
-
-              <a
-                href={post.href}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 font-semibold group-hover:gap-3 transition-all"
-              >
-                <Github className="w-4 h-4" />
-                View Repository
-                <ExternalLink className="w-4 h-4" />
-              </a>
-            </div>
-
-            {/* Gradient Border Effect */}
-            <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-blue-500 to-blue-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
-          </div>
-        ))}
-      </div>
-    </div>
+    </section>
   );
 };
 

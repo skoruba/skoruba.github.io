@@ -5,27 +5,99 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
 
   body {
-    @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300;
+    @apply bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-200;
+    font-feature-settings: "cv11", "ss01";
+  }
+
+  ::selection {
+    @apply bg-blue-500/25;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-blue-500 ring-offset-2 ring-offset-white dark:ring-offset-slate-950;
   }
 }
 
-@layer utilities {
+@layer components {
+  /* Soft brand glow + subtle dot grid behind the whole page */
+  .page-bg {
+    background-image:
+      radial-gradient(60rem 30rem at 50% -8rem, rgba(0, 174, 239, 0.16), transparent 70%),
+      radial-gradient(1px 1px at 1px 1px, rgba(15, 23, 42, 0.07) 1px, transparent 0);
+    background-size: 100% 100%, 24px 24px;
+  }
+  .dark .page-bg {
+    background-image:
+      radial-gradient(60rem 30rem at 50% -8rem, rgba(0, 174, 239, 0.14), transparent 70%),
+      radial-gradient(1px 1px at 1px 1px, rgba(148, 163, 184, 0.08) 1px, transparent 0);
+  }
+
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-[#00aeef] to-[#00aeef];
-  }
-  
-  .dark .text-gradient {
-    @apply bg-gradient-to-r from-[#00aeef] to-[#33cfef];
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-blue-500 to-blue-400 dark:from-blue-300 dark:via-blue-400 dark:to-blue-500;
   }
 
-  .animation-delay-2000 {
-    animation-delay: 2s;
+  .card {
+    @apply relative rounded-2xl border border-slate-200/80 bg-white/90 shadow-card backdrop-blur-sm transition-all duration-300 dark:border-slate-800 dark:bg-slate-900/70;
+  }
+  .card-hover {
+    @apply hover:-translate-y-1 hover:border-blue-400/70 hover:shadow-card-hover dark:hover:border-blue-500/60;
   }
 
-  .animation-delay-4000 {
-    animation-delay: 4s;
+  .pill {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700 dark:border-blue-800/70 dark:bg-blue-900/30 dark:text-blue-300;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-blue-500 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-500/25 transition-all duration-200 hover:bg-blue-600 hover:shadow-blue-500/40 active:translate-y-px;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-800 transition-all duration-200 hover:border-blue-400 hover:text-blue-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:border-blue-500 dark:hover:text-blue-300;
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-fade-in,
+  .animate-slide-up {
+    animation: none;
+  }
+}
+
+@layer components {
+  .spotlight::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    background: radial-gradient(
+      320px circle at var(--mx, 50%) var(--my, 50%),
+      rgba(0, 174, 239, 0.12),
+      transparent 60%
+    );
+  }
+  .spotlight:hover::before {
+    opacity: 1;
+  }
+  .dark .spotlight::before {
+    background: radial-gradient(
+      320px circle at var(--mx, 50%) var(--my, 50%),
+      rgba(0, 174, 239, 0.16),
+      transparent 60%
+    );
+  }
+  .spotlight > * {
+    position: relative;
   }
 }
