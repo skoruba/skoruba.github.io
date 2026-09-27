@@ -2,26 +2,19 @@ import { ArrowUpRight, Star } from "lucide-react";
 import projects from "../data/projects.json";
 import SectionHeading from "./SectionHeading";
 import Card from "./Card";
-import { useGitHubStars } from "../hooks/useGitHubStars";
 
 const Projects = () => {
-  const stars = useGitHubStars(
-    "skoruba",
-    projects.map((project) => project.name)
-  );
-
   return (
     <section className="py-16 sm:py-20">
       <SectionHeading
         id="projects"
         title="Projects"
-        description="Open-source tools for IdentityServer and ASP.NET Core Identity."
+        description="Selected open-source work for Duende IdentityServer and ASP.NET Core Identity."
       />
 
       <div className="grid gap-5 md:grid-cols-2">
         {projects.map((p) => {
           const archived = p.status === "archived";
-          const starCount = stars[p.name] ?? p.stars;
           return (
             <div key={p.name} className="h-full min-w-0">
               <Card href={p.href} className="flex h-full flex-col p-6">
@@ -31,6 +24,11 @@ const Projects = () => {
                     <ArrowUpRight className="ml-1 inline h-4 w-4 align-[-0.1em] text-slate-400 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-blue-500" />
                   </h3>
                   <div className="flex shrink-0 items-center gap-2 pt-0.5">
+                    {p.featured && (
+                      <span className="rounded-full border border-blue-200 bg-blue-50 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-blue-700 dark:border-blue-800/70 dark:bg-blue-900/30 dark:text-blue-300">
+                        Featured
+                      </span>
+                    )}
                     {archived && (
                       <span className="rounded-full border border-slate-200 bg-slate-100 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400">
                         Archived
@@ -38,7 +36,7 @@ const Projects = () => {
                     )}
                     <span className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white px-2.5 py-0.5 text-xs font-semibold tabular-nums text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200">
                       <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
-                      {starCount.toLocaleString("en-US")}
+                      {p.stars.toLocaleString("en-US")}
                     </span>
                   </div>
                 </div>

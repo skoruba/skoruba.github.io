@@ -5,7 +5,8 @@
     "href": "https://github.com/skoruba/Duende.IdentityServer.Admin",
     "description": "React and TypeScript administration UI with a .NET API for Duende IdentityServer and ASP.NET Core Identity. Manage clients, resources, users, roles, claims and persisted grants.",
     "stack": "React · TypeScript · .NET 10",
-    "stars": 719
+    "stars": 722,
+    "featured": true
   },
   {
     "name": "IdentityServer4.Admin",
@@ -14,7 +15,7 @@
     "description": "The original admin UI for IdentityServer4. Archived after IdentityServer4 reached end of life; superseded by the Duende version.",
     "stack": "ASP.NET Core · EF Core",
     "status": "archived",
-    "stars": 3574
+    "stars": 3573
   },
   {
     "name": "AuditLogging",

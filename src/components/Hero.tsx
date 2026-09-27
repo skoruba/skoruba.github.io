@@ -1,13 +1,10 @@
-import { ArrowRight, Github, MapPin, Users } from "lucide-react";
-import { useGitHubFollowers } from "../hooks/useGitHubFollowers";
+import { ArrowRight, Github, MapPin } from "lucide-react";
 import jan from "../images/jan.png";
 import TokenCard from "./TokenCard";
 
 const tags = ["OpenID Connect", "OAuth 2.1", "FAPI 2.0", "DPoP", "PAR"];
 
 const Hero = () => {
-  const followers = useGitHubFollowers("skoruba");
-
   return (
     <section className="relative pb-6 pt-12 sm:pt-16 lg:pt-20">
       <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14">
@@ -42,7 +39,8 @@ const Hero = () => {
             className="mx-auto mt-5 max-w-xl animate-slide-up text-base leading-relaxed text-slate-600 dark:text-slate-400 sm:text-lg lg:mx-0"
             style={{ animationDelay: "0.1s" }}
           >
-            I build open-source identity tooling.
+            I build open-source tooling for secure OpenID Connect and OAuth
+            deployments.
           </p>
 
           <ul
@@ -68,22 +66,10 @@ const Hero = () => {
               href="https://github.com/skoruba"
               target="_blank"
               rel="noreferrer"
-              className="btn-secondary group"
-              aria-label={
-                followers !== null
-                  ? `GitHub profile, ${followers.toLocaleString("en-US")} followers`
-                  : undefined
-              }
-              title={followers !== null ? `${followers.toLocaleString("en-US")} followers` : undefined}
+              className="btn-secondary"
             >
               <Github className="h-4 w-4" />
               GitHub profile
-              {followers !== null && (
-                <span className="inline-flex animate-fade-in items-center gap-1 border-l border-slate-200 pl-3 ml-1 tabular-nums text-slate-500 transition-colors group-hover:border-blue-200 group-hover:text-blue-600 dark:border-slate-700 dark:text-slate-400 dark:group-hover:border-blue-800 dark:group-hover:text-blue-300">
-                  <Users className="h-3.5 w-3.5" />
-                  {followers.toLocaleString("en-US")}
-                </span>
-              )}
             </a>
           </div>
         </div>
