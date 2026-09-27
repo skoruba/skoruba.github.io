@@ -5,10 +5,77 @@
     <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
-      name="description"
-      content="Jan Škoruba - Software Developer & Identity Consultant"
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self'; form-action 'self'; upgrade-insecure-requests"
     />
-    <title>Jan Škoruba - Software Developer & Identity Enthusiast</title>
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="robots" content="index, follow" />
+    <meta
+      name="description"
+      content="Jan Škoruba – Identity Engineer. OpenID Connect, OAuth 2.0, FAPI 2.0, DPoP, Duende IdentityServer, ASP.NET Core Identity. Author of the Duende IdentityServer Admin UI."
+    />
+    <meta name="color-scheme" content="light dark" />
+    <meta property="og:title" content="Jan Škoruba – Identity Engineer" />
+    <meta
+      property="og:description"
+      content="Identity & access engineering: OpenID Connect, OAuth 2.0, Duende IdentityServer, ASP.NET Core Identity."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://skoruba.com" />
+    <meta property="og:site_name" content="Jan Škoruba" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:image" content="https://skoruba.com/og-image.png" />
+    <meta property="og:image:alt" content="Jan Škoruba, Identity Engineer" />
+    <meta property="og:image:width" content="1672" />
+    <meta property="og:image:height" content="941" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Jan Škoruba – Identity Engineer" />
+    <meta
+      name="twitter:description"
+      content="Identity & access engineering: OpenID Connect, OAuth 2.0, Duende IdentityServer, ASP.NET Core Identity."
+    />
+    <meta name="twitter:image" content="https://skoruba.com/og-image.png" />
+    <meta name="twitter:image:alt" content="Jan Škoruba, Identity Engineer" />
+    <meta name="twitter:url" content="https://skoruba.com/" />
+    <link rel="canonical" href="https://skoruba.com/" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <title>Jan Škoruba – Identity Engineer</title>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Jan Škoruba",
+        "url": "https://skoruba.com/",
+        "image": "https://skoruba.com/og-image.png",
+        "jobTitle": "Identity Engineer",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Prague",
+          "addressCountry": "CZ"
+        },
+        "sameAs": [
+          "https://github.com/skoruba",
+          "https://linkedin.com/in/skoruba",
+          "https://x.com/skoruba"
+        ]
+      }
+    </script>
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem("theme");
+          var dark =
+            t === "dark" ||
+            (!t && window.matchMedia("(prefers-color-scheme: dark)").matches);
+          if (dark) document.documentElement.classList.add("dark");
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
