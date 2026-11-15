@@ -1,0 +1,104 @@
+---
+/**
+ * Privacy-friendly YouTube embed.
+ * Shows a locally served thumbnail; the youtube-nocookie.com iframe is only
+ * created after the visitor presses play.
+ *
+ * In MDX:  <YouTube id="dQw4w9WgXcQ" title="What the video is about" />
+ */
+import { Image } from "astro:assets";
+import { youtubeThumbnail, youtubeWatchUrl } from "../lib/youtube";
+
+interface Props {
+  id: string;
+  title: string;
+  /** Start position in seconds. */
+  start?: number;
+  caption?: string;
+  /** Set to true for videos further down the article. */
+  lazy?: boolean;
+}
+
+const { id, title, start, caption, lazy = false } = Astro.props;
+const thumb = await youtubeThumbnail(id);
+const params = new URLSearchParams({ autoplay: "1", rel: "0", modestbranding: "1" });
+if (start) params.set("start", String(start));
+const embed = `https://www.youtube-nocookie.com/embed/${id}?${params}`;
+---
+
+<figure class="not-prose my-10">
+  <div class="relative">
+    <div
+      class="absolute -inset-3 rounded-[1.75rem] bg-gradient-to-br from-blue-400/30 via-blue-500/10 to-transparent blur-2xl"
+    >
+    </div>
+    <div
+      class="yt-embed relative aspect-video overflow-hidden rounded-2xl border border-slate-200/80 bg-slate-900 shadow-glow dark:border-slate-800"
+      data-embed={embed}
+      data-title={title}
+    >
+      <Image
+        src={thumb}
+        alt=""
+        width={1280}
+        height={720}
+        loading={lazy ? "lazy" : "eager"}
+        class="absolute inset-0 h-full w-full object-cover"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/10 to-transparent">
+      </div>
+      <button
+        type="button"
+        class="group absolute inset-0 flex items-center justify-center"
+        aria-label={`Play video: ${title}`}
+      >
+        <span
+          class="flex h-16 w-16 items-center justify-center rounded-full bg-blue-500 text-white shadow-lg shadow-blue-500/40 ring-8 ring-white/15 transition-transform duration-200 group-hover:scale-110 sm:h-20 sm:w-20"
+        >
+          <svg viewBox="0 0 24 24" class="ml-1 h-7 w-7 sm:h-8 sm:w-8" fill="currentColor" aria-hidden="true">
+            <path d="M8 5.14v13.72a1 1 0 0 0 1.5.86l11-6.86a1 1 0 0 0 0-1.72l-11-6.86A1 1 0 0 0 8 5.14Z"></path>
+          </svg>
+        </span>
+        <span
+          class="absolute bottom-4 left-4 right-4 truncate text-left text-sm font-semibold text-white drop-shadow sm:bottom-5 sm:left-5 sm:text-base"
+        >
+          {title}
+        </span>
+      </button>
+    </div>
+  </div>
+  <figcaption
+    class="mt-3 flex flex-col gap-1 text-xs text-slate-500 dark:text-slate-400 sm:flex-row sm:items-center sm:justify-between"
+  >
+    <span>{caption ?? "The player loads from youtube-nocookie.com after you press play."}</span>
+    <a
+      href={youtubeWatchUrl(id)}
+      target="_blank"
+      rel="noreferrer"
+      class="font-medium text-blue-600 hover:underline dark:text-blue-300"
+    >
+      Watch on YouTube ↗
+    </a>
+  </figcaption>
+</figure>
+
+<script>
+  for (const box of document.querySelectorAll<HTMLElement>(".yt-embed")) {
+    box.querySelector("button")?.addEventListener(
+      "click",
+      () => {
+        const iframe = document.createElement("iframe");
+        iframe.src = box.dataset.embed!;
+        iframe.title = box.dataset.title ?? "YouTube video";
+        iframe.allow =
+          "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+        iframe.allowFullscreen = true;
+        iframe.referrerPolicy = "strict-origin-when-cross-origin";
+        iframe.className = "absolute inset-0 h-full w-full";
+        box.replaceChildren(iframe);
+        iframe.focus();
+      },
+      { once: true }
+    );
+  }
+</script>

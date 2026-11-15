@@ -1,0 +1,168 @@
+---
+/**
+ * YouTube thumbnail (1280×720) for a post. Rendered by src/pages/thumbnail/[...slug].astro (dev only).
+ *
+ *   npm run dev
+ *   open http://localhost:4321/thumbnail/<slug>/            (light)
+ *   open http://localhost:4321/thumbnail/<slug>/?theme=dark  (dark)
+ *   npm run thumbnail -- <slug> [--dark]                     (saves a JPEG to thumbnails/)
+ *
+ * Text comes from the post frontmatter (`title`, or `thumbnail.headline` / `thumbnail.subtitle`).
+ */
+import "../../styles/index.css";
+import { Image } from "astro:assets";
+import jan from "../../images/jan.png";
+import logo from "../../images/logo.svg";
+import LintCard from "./LintCard.astro";
+import type { Post } from "../../lib/posts";
+
+interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+const { title, thumbnail } = post.data;
+const badge = thumbnail?.badge;
+const card = thumbnail?.card;
+const colon = title.indexOf(":");
+const headline =
+  thumbnail?.headline ?? (colon > 0 ? title.slice(0, colon).trim() : title);
+const subtitle =
+  thumbnail?.subtitle ?? (colon > 0 ? title.slice(colon + 1).trim() : undefined);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="viewport" content="width=1280" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=block"
+      rel="stylesheet"
+    />
+    <title>Thumbnail – {title}</title>
+    <script is:inline>
+      if (new URLSearchParams(location.search).get("theme") === "dark")
+        document.documentElement.classList.add("dark");
+    </script>
+    <style is:global>
+      body.thumb-page {
+        margin: 0;
+        overflow: hidden;
+        display: grid;
+        place-items: center;
+        min-height: 100vh;
+        background: #0f172a;
+      }
+      /* Bigger dot grid than the site so it survives YouTube's compression */
+      .thumb-bg {
+        background-image:
+          radial-gradient(48rem 30rem at 78% 42%, rgba(0, 174, 239, 0.28), transparent 70%),
+          radial-gradient(40rem 26rem at 0% 100%, rgba(0, 174, 239, 0.14), transparent 70%),
+          radial-gradient(1.5px 1.5px at 1.5px 1.5px, rgba(15, 23, 42, 0.1) 1.5px, transparent 0);
+        background-size: 100% 100%, 100% 100%, 28px 28px;
+      }
+      .dark .thumb-bg {
+        background-image:
+          radial-gradient(48rem 30rem at 78% 42%, rgba(0, 174, 239, 0.26), transparent 70%),
+          radial-gradient(40rem 26rem at 0% 100%, rgba(0, 174, 239, 0.12), transparent 70%),
+          radial-gradient(1.5px 1.5px at 1.5px 1.5px, rgba(148, 163, 184, 0.12) 1.5px, transparent 0);
+      }
+      .thumb-textcol {
+        transform: translateY(22px);
+      }
+    </style>
+  </head>
+  <body class="thumb-page">
+    <div
+      id="thumb"
+      class="thumb-bg relative h-[720px] w-[1280px] overflow-hidden bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-white"
+    >
+      <div class="absolute left-20 top-11 flex h-11 items-center">
+        <img src={logo.src} alt="Skoruba" class="h-11 w-auto" />
+        {badge && (
+          <span class="ml-5 flex items-center gap-5">
+            <span class="h-9 w-[2px] rounded-full bg-slate-300 dark:bg-slate-600" />
+            <span class="text-[30px] font-semibold tracking-tight text-slate-700 dark:text-slate-200">
+              {badge.replace(/^Skoruba\s+/i, "")}
+            </span>
+          </span>
+        )}
+      </div>
+
+      <div class="absolute inset-0 grid grid-cols-[1fr_340px] items-center gap-14 px-20">
+        {/* Text */}
+        <div class:list={["flex h-[560px] min-w-0 flex-col justify-center", card && "thumb-textcol"]}>
+          <h1
+            data-fit="headline"
+            data-max="2"
+            class:list={["text-gradient text-balance pb-2 pt-[0.12em] font-black leading-[0.98] tracking-[-0.035em]", card ? "text-[84px]" : "text-[112px]"]}
+          >
+            {headline}
+          </h1>
+          {subtitle && (
+            <p
+              data-fit="subtitle"
+              data-max="3"
+              class:list={["mt-5 text-balance font-bold leading-[1.12] tracking-[-0.02em] text-slate-800 dark:text-slate-100", card ? "text-[36px]" : "text-[46px]"]}
+            >
+              {subtitle}
+            </p>
+          )}
+          {card && (
+            <div class="mt-12">
+              <LintCard variant={card} />
+            </div>
+          )}
+        </div>
+
+        {/* Photo + name */}
+        <div class="flex flex-col items-center">
+          <div class="relative">
+            <div class="absolute -inset-2.5 rounded-full bg-gradient-to-br from-blue-400 via-blue-500 to-blue-300 opacity-60 blur-[14px]" />
+            <Image
+              src={jan}
+              alt="Jan Škoruba"
+              width={460}
+              height={460}
+              loading="eager"
+              class="relative h-[280px] w-[280px] rounded-full border-[8px] border-white object-cover shadow-xl dark:border-slate-900"
+            />
+          </div>
+          <p class="text-gradient mt-6 py-1 text-[42px] font-extrabold leading-[1.25] tracking-tight">
+            Jan Škoruba
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script is:inline>
+      // Shrink headline / subtitle until they fit their line budget and the column.
+      function fit() {
+        for (const el of document.querySelectorAll("[data-fit]")) {
+          const maxLines = Number(el.dataset.max);
+          let size = parseFloat(getComputedStyle(el).fontSize);
+          const tooBig = () => {
+            const cs = getComputedStyle(el);
+            const lh = parseFloat(cs.lineHeight);
+            // Content height only – padding (room for diacritics) doesn't count as a line.
+            const h = el.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+            return el.scrollWidth > el.clientWidth + 1 || h > lh * maxLines + 2;
+          };
+          // Never break inside a word – shrink instead.
+          el.style.overflowWrap = "normal";
+          el.style.wordBreak = "keep-all";
+          while (tooBig() && size > 24) {
+            size -= 2;
+            el.style.fontSize = size + "px";
+          }
+        }
+        document.documentElement.dataset.ready = "1";
+      }
+      document.fonts.ready.then(fit);
+    </script>
+  </body>
+</html>

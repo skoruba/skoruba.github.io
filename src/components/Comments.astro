@@ -1,0 +1,84 @@
+---
+/**
+ * Reactions + comments via giscus (GitHub Discussions). See src/config/giscus.ts.
+ * The widget loads from giscus.app only when scrolled near, and follows the site theme.
+ */
+import { giscus, giscusEnabled } from "../config/giscus";
+
+interface Props {
+  /** Stable discussion key, independent of title or URL changes. */
+  term: string;
+}
+
+const { term } = Astro.props;
+const config = {
+  "data-repo": giscus.repo,
+  "data-repo-id": giscus.repoId,
+  "data-category": giscus.category,
+  "data-category-id": giscus.categoryId,
+  "data-mapping": "specific",
+  "data-term": term,
+  "data-strict": "1",
+  "data-reactions-enabled": "1",
+  "data-emit-metadata": "0",
+  "data-input-position": "bottom",
+  "data-lang": "en",
+  "data-loading": "lazy",
+};
+---
+
+{
+  giscusEnabled ? (
+    <section class="mt-12" aria-labelledby="comments-heading">
+      <h2
+        id="comments-heading"
+        class="flex items-center gap-3 text-xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-2xl"
+      >
+        <span class="h-6 w-1 rounded-full bg-gradient-to-b from-blue-400 to-blue-600" />
+        Comments
+      </h2>
+      <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">
+        Comments are stored as GitHub Discussions. Sign in with GitHub to react or reply.
+      </p>
+      <div class="giscus-mount mt-6" data-giscus={JSON.stringify(config)} />
+    </section>
+  ) : (
+    import.meta.env.DEV && (
+      <section class="mt-12 rounded-2xl border-2 border-dashed border-slate-300 p-6 text-center text-sm text-slate-500 dark:border-slate-700 dark:text-slate-400">
+        <p class="font-semibold text-slate-700 dark:text-slate-300">Comments & reactions (giscus)</p>
+        <p class="mt-1">
+          Not configured yet – fill in <code class="font-mono text-xs">categoryId</code> in{" "}
+          <code class="font-mono text-xs">src/config/giscus.ts</code>. (Shown only in local dev.)
+        </p>
+      </section>
+    )
+  )
+}
+
+<script>
+  const themeFor = () =>
+    document.documentElement.classList.contains("dark") ? "transparent_dark" : "light";
+
+  const mount = document.querySelector<HTMLElement>(".giscus-mount");
+  if (mount) {
+    const config = JSON.parse(mount.dataset.giscus ?? "{}") as Record<string, string>;
+    const s = document.createElement("script");
+    s.src = "https://giscus.app/client.js";
+    s.async = true;
+    s.crossOrigin = "anonymous";
+    for (const [k, v] of Object.entries(config)) s.setAttribute(k, v);
+    s.setAttribute("data-theme", themeFor());
+    mount.classList.add("giscus");
+    mount.after(s);
+
+    // Keep the widget in sync with the site's theme toggle.
+    new MutationObserver(() => {
+      document
+        .querySelector<HTMLIFrameElement>("iframe.giscus-frame")
+        ?.contentWindow?.postMessage(
+          { giscus: { setConfig: { theme: themeFor() } } },
+          "https://giscus.app"
+        );
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+  }
+</script>

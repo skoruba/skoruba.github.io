@@ -13,7 +13,7 @@ const Hero = () => {
             <div className="relative inline-block">
               <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-blue-400 via-blue-500 to-blue-300 opacity-70 blur-sm" />
               <img
-                src={jan}
+                src={jan.src}
                 alt="Jan Škoruba"
                 width={112}
                 height={112}

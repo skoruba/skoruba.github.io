@@ -1,0 +1,6 @@
+# Prettier does not understand MDX 2+ syntax and breaks {/* comments */} and JSX
+*.mdx
+
+# build output
+dist/
+.astro/

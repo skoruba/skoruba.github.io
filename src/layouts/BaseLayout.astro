@@ -1,0 +1,183 @@
+---
+import "../styles/index.css";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Absolute or root-relative image URL for link previews. */
+  image?: string;
+  imageAlt?: string;
+  imageWidth?: number;
+  imageHeight?: number;
+  type?: "website" | "article";
+  publishedTime?: Date;
+  modifiedTime?: Date;
+  jsonLd?: Record<string, unknown>;
+  noindex?: boolean;
+}
+
+const SITE_TITLE = "Jan Škoruba – Identity Engineer";
+const DEFAULT_DESCRIPTION =
+  "Jan Škoruba – Identity Engineer. OpenID Connect, OAuth 2.0, FAPI 2.0, DPoP, Duende IdentityServer, ASP.NET Core Identity. Author of the Duende IdentityServer Admin UI.";
+
+const {
+  title,
+  description = DEFAULT_DESCRIPTION,
+  image = "/og-image.png",
+  imageAlt = "Jan Škoruba, Identity Engineer",
+  imageWidth = image === "/og-image.png" ? 1672 : undefined,
+  imageHeight = image === "/og-image.png" ? 941 : undefined,
+  type = "website",
+  publishedTime,
+  modifiedTime,
+  jsonLd,
+  noindex = false,
+} = Astro.props;
+
+const fullTitle = title ? `${title} – Jan Škoruba` : SITE_TITLE;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const imageUrl = new URL(image, Astro.site).href;
+
+const csp = [
+  "default-src 'self'",
+  "base-uri 'self'",
+  "object-src 'none'",
+  "img-src 'self' data:",
+  "script-src 'self' 'unsafe-inline' https://giscus.app",
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://giscus.app",
+  "font-src https://fonts.gstatic.com",
+  "connect-src 'self'",
+  "frame-src https://www.youtube-nocookie.com https://giscus.app",
+  "form-action 'self'",
+  "upgrade-insecure-requests",
+].join("; ");
+
+const person = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Jan Škoruba",
+  url: "https://skoruba.com/",
+  image: "https://skoruba.com/og-image.png",
+  jobTitle: "Identity Engineer",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Prague",
+    addressCountry: "CZ",
+  },
+  sameAs: [
+    "https://github.com/skoruba",
+    "https://linkedin.com/in/skoruba",
+    "https://x.com/skoruba",
+  ],
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Security-Policy" content={csp} />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
+    <meta name="description" content={description} />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="generator" content={Astro.generator} />
+
+    <meta property="og:title" content={title ?? SITE_TITLE} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Jan Škoruba" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:image:alt" content={imageAlt} />
+    {imageWidth && <meta property="og:image:width" content={String(imageWidth)} />}
+    {imageHeight && <meta property="og:image:height" content={String(imageHeight)} />}
+    {publishedTime && (
+      <meta property="article:published_time" content={publishedTime.toISOString()} />
+    )}
+    {modifiedTime && (
+      <meta property="article:modified_time" content={modifiedTime.toISOString()} />
+    )}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@skoruba" />
+    <meta name="twitter:title" content={title ?? SITE_TITLE} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+    <meta name="twitter:image:alt" content={imageAlt} />
+
+    <link rel="canonical" href={canonical} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Jan Škoruba – Blog"
+      href="/rss.xml"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <title>{fullTitle}</title>
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd ?? person)} />
+
+    <!-- Apply the saved theme before first paint to avoid a flash. -->
+    <script is:inline>
+      (function () {
+        try {
+          var t = localStorage.getItem("theme");
+          var dark =
+            t === "dark" ||
+            (!t && window.matchMedia("(prefers-color-scheme: dark)").matches);
+          if (dark) document.documentElement.classList.add("dark");
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <div class="page-bg flex min-h-screen flex-col">
+      <Header />
+      <main class="mx-auto w-full max-w-6xl flex-1 px-4 sm:px-6">
+        <slot />
+      </main>
+      <Footer />
+    </div>
+
+    <script>
+      // Theme toggle
+      for (const btn of document.querySelectorAll<HTMLButtonElement>("[data-theme-toggle]")) {
+        const label = () =>
+          `Switch to ${document.documentElement.classList.contains("dark") ? "light" : "dark"} theme`;
+        btn.setAttribute("aria-label", label());
+        btn.title = label();
+        btn.addEventListener("click", () => {
+          const dark = document.documentElement.classList.toggle("dark");
+          try {
+            localStorage.setItem("theme", dark ? "dark" : "light");
+          } catch {
+            /* storage unavailable */
+          }
+          btn.setAttribute("aria-label", label());
+          btn.title = label();
+        });
+      }
+
+      // Cursor-following highlight on .spotlight cards
+      document.addEventListener("pointermove", (e) => {
+        const el = (e.target as Element | null)?.closest<HTMLElement>(".spotlight");
+        if (!el) return;
+        const r = el.getBoundingClientRect();
+        el.style.setProperty("--mx", `${e.clientX - r.left}px`);
+        el.style.setProperty("--my", `${e.clientY - r.top}px`);
+      });
+    </script>
+  </body>
+</html>

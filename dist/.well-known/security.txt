@@ -1,4 +1,0 @@
-Contact: mailto:jan@skoruba.com
-Canonical: https://skoruba.com/.well-known/security.txt
-Preferred-Languages: en, cs
-Expires: 2027-09-27T00:00:00.000Z

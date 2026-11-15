@@ -1,0 +1,89 @@
+---
+/** /thumbnail/ – overview of all post thumbnails with live previews (dev only). */
+import "../../styles/index.css";
+import type { Post } from "../../lib/posts";
+
+interface Props {
+  posts: Post[];
+}
+
+const { posts } = Astro.props;
+const SCALE = 0.375; // 1280×720 -> 480×270
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <title>YouTube thumbnails</title>
+  </head>
+  <body class="page-bg min-h-screen">
+    <main class="mx-auto max-w-5xl px-4 py-12 sm:px-6">
+      <span class="pill">Local dev only</span>
+      <h1 class="mt-4 text-3xl font-extrabold tracking-tight text-slate-900">YouTube thumbnails</h1>
+      <p class="mt-2 text-slate-600">
+        One 1280×720 thumbnail per post. Open one to tweak it, or save a PNG with
+        <code class="rounded bg-slate-100 px-1.5 py-0.5 font-mono text-sm">npm run thumbnail -- &lt;slug&gt;</code>.
+      </p>
+
+      {
+        posts.length === 0 ? (
+          <p class="mt-10 text-slate-500">No posts in src/content/blog yet.</p>
+        ) : (
+          <ul class="mt-10 space-y-10">
+            {posts.map((post) => {
+              const href = `/thumbnail/${post.id}/`;
+              return (
+                <li class="card p-5">
+                  <h2 class="font-bold text-slate-900">{post.data.title}</h2>
+                  <p class="mt-1 font-mono text-xs text-slate-500">{post.id}</p>
+
+                  <div class="mt-5 grid gap-5 md:grid-cols-2">
+                    {[
+                      { label: "Light", url: href, flag: "" },
+                      { label: "Dark", url: `${href}?theme=dark`, flag: " --dark" },
+                    ].map(({ label, url, flag }) => (
+                      <div>
+                        <a
+                          href={url}
+                          class="block overflow-hidden rounded-xl border border-slate-200 shadow-card transition-shadow hover:shadow-card-hover"
+                          style={`width:${1280 * SCALE}px;max-width:100%;aspect-ratio:16/9`}
+                        >
+                          <iframe
+                            src={url}
+                            title={`${label} thumbnail preview`}
+                            loading="lazy"
+                            tabindex="-1"
+                            class="pointer-events-none origin-top-left border-0"
+                            style={`width:1280px;height:720px;transform:scale(${SCALE})`}
+                          />
+                        </a>
+                        <div class="mt-2 flex flex-wrap items-center justify-between gap-2 text-sm">
+                          <a href={url} class="font-semibold text-blue-600 hover:underline">
+                            {label} ↗
+                          </a>
+                          <code class="rounded bg-slate-100 px-1.5 py-0.5 font-mono text-xs text-slate-600">
+                            npm run thumbnail -- {post.id}
+                            {flag}
+                          </code>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        )
+      }
+    </main>
+  </body>
+</html>

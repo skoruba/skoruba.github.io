@@ -3,7 +3,12 @@ import projects from "../data/projects.json";
 import SectionHeading from "./SectionHeading";
 import Card from "./Card";
 
-const Projects = () => {
+interface Props {
+  /** Live star counts keyed by project name; falls back to projects.json. */
+  stars?: Record<string, number | undefined>;
+}
+
+const Projects = ({ stars = {} }: Props) => {
   return (
     <section className="py-16 sm:py-20">
       <SectionHeading
@@ -36,7 +41,7 @@ const Projects = () => {
                     )}
                     <span className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white px-2.5 py-0.5 text-xs font-semibold tabular-nums text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200">
                       <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
-                      {p.stars.toLocaleString("en-US")}
+                      {(stars[p.name] ?? p.stars).toLocaleString("en-US")}
                     </span>
                   </div>
                 </div>

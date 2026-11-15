@@ -1,0 +1,30 @@
+---
+/**
+ * YouTube thumbnails – local dev only, never built for production.
+ *
+ *   /thumbnail/                         overview of all posts
+ *   /thumbnail/<slug>/[?theme=dark]     1280×720 thumbnail of one post
+ *   npm run thumbnail -- <slug> [--dark] saves it as a PNG in thumbnails/
+ */
+import Thumbnail from "../../components/thumbnail/Thumbnail.astro";
+import ThumbnailIndex from "../../components/thumbnail/ThumbnailIndex.astro";
+import { getPosts, type Post } from "../../lib/posts";
+
+export async function getStaticPaths() {
+  if (!import.meta.env.DEV) return [];
+  const posts = await getPosts();
+  return [
+    { params: { slug: undefined }, props: { posts } },
+    ...posts.map((post) => ({ params: { slug: post.id }, props: { post, posts } })),
+  ];
+}
+
+interface Props {
+  post?: Post;
+  posts: Post[];
+}
+
+const { post, posts } = Astro.props;
+---
+
+{post ? <Thumbnail post={post} /> : <ThumbnailIndex posts={posts} />}

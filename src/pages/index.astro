@@ -1,0 +1,25 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero";
+import Projects from "../components/Projects";
+import LatestArticles from "../components/LatestArticles.astro";
+import Contact from "../components/Contact";
+import projects from "../data/projects.json";
+import { fetchStars, repoFromUrl } from "../lib/github";
+
+const stars = Object.fromEntries(
+  await Promise.all(
+    projects.map(async (p) => {
+      const repo = repoFromUrl(p.href);
+      return [p.name, repo ? await fetchStars(repo) : undefined] as const;
+    })
+  )
+);
+---
+
+<BaseLayout>
+  <Hero />
+  <LatestArticles />
+  <Projects stars={stars} />
+  <Contact />
+</BaseLayout>
