@@ -1,0 +1,39 @@
+---
+import SectionHeading from "./SectionHeading";
+import PostCard from "./PostCard.astro";
+import { getPosts } from "../lib/posts";
+
+const posts = (await getPosts()).slice(0, 3);
+---
+
+{
+  posts.length > 0 && (
+    <section class="py-16 sm:py-20">
+      <SectionHeading
+        id="articles"
+        title="Latest articles"
+        description="Write-ups and videos on IdentityServer, the Admin UI and OAuth security."
+      />
+      <div
+        class:list={[
+          "mx-auto grid gap-5",
+          posts.length === 1 && "max-w-xl",
+          posts.length === 2 && "max-w-4xl md:grid-cols-2",
+          posts.length >= 3 && "md:grid-cols-2 lg:grid-cols-3",
+        ]}
+      >
+        {posts.map((post) => (
+          <PostCard post={post} />
+        ))}
+      </div>
+      <div class="mt-10 text-center">
+        <a href="/blog/" class="btn-secondary group">
+          All articles
+          <svg viewBox="0 0 24 24" class="h-4 w-4 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </a>
+      </div>
+    </section>
+  )
+}

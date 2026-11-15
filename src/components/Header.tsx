@@ -4,8 +4,9 @@ import Logo from "../images/logo.svg";
 import Icon from "../images/icon.svg";
 
 const nav = [
-  { name: "Projects", href: "#projects" },
-  { name: "Contact", href: "#contact" },
+  { name: "Projects", href: "/#projects" },
+  { name: "Blog", href: "/blog/" },
+  { name: "Contact", href: "/#contact" },
 ];
 
 const Header = () => {
@@ -13,8 +14,8 @@ const Header = () => {
     <header className="sticky top-0 z-30 border-b border-slate-200/70 bg-slate-50/80 backdrop-blur-md dark:border-slate-800/70 dark:bg-slate-950/70">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
         <a href="/" className="flex items-center" aria-label="Jan Škoruba – home">
-          <img src={Logo} alt="Jan Škoruba" className="hidden h-8 w-auto sm:block" />
-          <img src={Icon} alt="Jan Škoruba" className="h-8 w-auto sm:hidden" />
+          <img src={Logo.src} alt="Jan Škoruba" className="hidden h-8 w-auto sm:block" />
+          <img src={Icon.src} alt="Jan Škoruba" className="h-8 w-auto sm:hidden" />
         </a>
 
         <nav aria-label="Primary" className="flex items-center gap-1 sm:gap-2">

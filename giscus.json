@@ -1,0 +1,4 @@
+{
+  "origins": ["https://skoruba.com", "http://localhost:4321"],
+  "defaultCommentOrder": "oldest"
+}

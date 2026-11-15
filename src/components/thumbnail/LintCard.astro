@@ -1,0 +1,60 @@
+---
+/**
+ * Lint-style card for the YouTube thumbnail, in the same visual language as the
+ * decoded id_token card on the home page (src/components/TokenCard.tsx).
+ *
+ *   summary – issue counts from the Configuration Rules dashboard
+ *   config  – lint findings for one client, as plain-language messages
+ */
+import { AlertCircle, FileJson, ShieldAlert } from "lucide-react";
+
+interface Props {
+  variant: "summary" | "config";
+}
+
+const { variant } = Astro.props;
+---
+
+<div class="relative w-[620px]">
+  <div class="absolute -inset-3 rounded-[1.75rem] bg-gradient-to-br from-blue-400/30 via-blue-500/10 to-transparent blur-2xl"></div>
+  <div class="card relative overflow-hidden p-0 shadow-glow dark:border-slate-600/70 dark:bg-slate-800/80">
+    <div class="flex items-center justify-between border-b border-slate-200/80 px-7 py-3.5 dark:border-slate-600/60">
+      <div class="flex items-center gap-2.5 text-[25px] font-medium text-slate-500 dark:text-slate-400">
+        {
+          variant === "summary" ? (
+            <>
+              <ShieldAlert className="h-[25px] w-[25px] text-blue-500" />
+              configuration_rules
+              <span class="text-slate-300 dark:text-slate-600">·</span>
+              <span class="font-mono">scope: all</span>
+            </>
+          ) : (
+            <>
+              <FileJson className="h-[25px] w-[25px] text-blue-500" />
+              client
+              <span class="text-slate-300 dark:text-slate-600">·</span>
+              <span class="font-mono">web_app</span>
+            </>
+          )
+        }
+      </div>
+      <span class="inline-flex items-center gap-1.5 rounded-full border border-red-200 bg-red-50 px-3.5 py-1.5 text-[18px] font-bold uppercase tracking-wider text-red-700 dark:border-red-400/60 dark:bg-red-500/25 dark:text-red-200">
+        <AlertCircle className="h-[19px] w-[19px]" />
+        {variant === "summary" ? "31 issues" : "2 issues"}
+      </span>
+    </div>
+
+    {
+      variant === "summary" ? (
+        <pre class="px-7 py-4 font-mono text-[26px] leading-[1.45] text-slate-700 dark:text-slate-300"><code><span class="text-slate-400 dark:text-slate-500">{"{"}</span>
+  <span class="text-red-600 dark:text-red-400">"errors"</span><span class="text-slate-400 dark:text-slate-500">:</span> <span class="text-slate-900 dark:text-white">16</span><span class="text-slate-400 dark:text-slate-500">,</span>
+  <span class="text-amber-600 dark:text-amber-400">"warnings"</span><span class="text-slate-400 dark:text-slate-500">:</span> <span class="text-slate-900 dark:text-white">7</span><span class="text-slate-400 dark:text-slate-500">,</span>
+  <span class="text-blue-600 dark:text-blue-300">"recommendations"</span><span class="text-slate-400 dark:text-slate-500">:</span> <span class="text-slate-900 dark:text-white">8</span>
+<span class="text-slate-400 dark:text-slate-500">{"}"}</span></code></pre>
+      ) : (
+        <pre class="px-7 py-5 font-mono text-[32px] leading-[1.55] text-slate-800 dark:text-slate-100"><code><span class="mr-4 text-red-500">✕</span><span class="text-blue-600 dark:text-blue-300">Implicit flow</span> is deprecated
+<span class="mr-4 text-amber-500">⚠</span><span class="text-blue-600 dark:text-blue-300">PKCE</span> is disabled</code></pre>
+      )
+    }
+  </div>
+</div>

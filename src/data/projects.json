@@ -5,7 +5,7 @@
     "href": "https://github.com/skoruba/Duende.IdentityServer.Admin",
     "description": "React and TypeScript administration UI with a .NET API for Duende IdentityServer and ASP.NET Core Identity. Manage clients, resources, users, roles, claims and persisted grants.",
     "stack": "React · TypeScript · .NET 10",
-    "stars": 722,
+    "stars": 731,
     "featured": true
   },
   {
@@ -15,7 +15,7 @@
     "description": "The original admin UI for IdentityServer4. Archived after IdentityServer4 reached end of life; superseded by the Duende version.",
     "stack": "ASP.NET Core · EF Core",
     "status": "archived",
-    "stars": 3573
+    "stars": 3570
   },
   {
     "name": "AuditLogging",
@@ -32,6 +32,6 @@
     "description": "Reference OpenID Connect client in React and TypeScript using oidc-client-js. Authorization Code flow with PKCE.",
     "stack": "React · TypeScript",
     "status": "archived",
-    "stars": 176
+    "stars": 174
   }
 ]
