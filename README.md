@@ -6,7 +6,7 @@ Built with [Astro](https://astro.build), React components rendered at build time
 
 ## Development
 
-Requires Node.js 22.12 or newer.
+Requires Node.js 22.23.4 or newer.
 
 ```bash
 npm install
