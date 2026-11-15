@@ -15,11 +15,11 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.12",
-    "@astrojs/mdx": "^6.0.3",
-    "@astrojs/react": "^6.0.6",
+    "@astrojs/mdx": "^8.0.3",
+    "@astrojs/react": "^7.0.1",
     "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.4",
-    "astro": "^6.4.8",
+    "astro": "^7.4.12",
     "lucide-react": "^0.294.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
@@ -31,14 +31,16 @@
     "autoprefixer": "^10.4.20",
     "gh-pages": "^6.1.1",
     "postcss": "^8.4.47",
-    "puppeteer-core": "^23.11.1",
+    "puppeteer-core": "^25.17.0",
     "tailwindcss": "^3.4.14",
     "typescript": "^5.6.3"
   },
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=22.23.4"
   },
   "overrides": {
-    "vite": "^7.3.2"
+    "@tailwindcss/typography": {
+      "postcss-selector-parser": "^6.1.6"
+    }
   }
 }

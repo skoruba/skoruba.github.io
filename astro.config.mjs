@@ -7,6 +7,9 @@ import sitemap from "@astrojs/sitemap";
 export default defineConfig({
   site: "https://skoruba.com",
   trailingSlash: "ignore",
+  // Astro 7 defaults to "jsx", which removes the whitespace between inline elements.
+  // true keeps the Astro 6 output.
+  compressHTML: true,
   build: {
     format: "directory",
   },
