@@ -24,6 +24,7 @@ const minutes = readingTime(post.body);
             src={cover}
             alt=""
             width={640}
+            densities={[1, 2]}
             class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
           />
         ) : (
@@ -32,6 +33,7 @@ const minutes = readingTime(post.body);
             alt=""
             width={640}
             height={360}
+            densities={[1, 2]}
             class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
           />
         )}
