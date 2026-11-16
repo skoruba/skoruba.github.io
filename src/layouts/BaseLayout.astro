@@ -143,7 +143,7 @@ const person = {
     </script>
   </head>
   <body>
-    <div class="page-bg flex min-h-screen flex-col">
+    <div class:list={["page-bg flex min-h-screen flex-col", type === "article" && "page-bg-article"]}>
       <Header />
       <main class="mx-auto w-full max-w-6xl flex-1 px-4 sm:px-6">
         <slot />

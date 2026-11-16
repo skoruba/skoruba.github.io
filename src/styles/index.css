@@ -5,8 +5,12 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+  }
+
+  /* Thinner glyphs suit light text on dark; on a light background they cost legibility. */
+  html.dark {
+    -webkit-font-smoothing: antialiased;
   }
 
   body {
@@ -35,6 +39,15 @@
     background-image:
       radial-gradient(60rem 30rem at 50% -8rem, rgba(0, 174, 239, 0.14), transparent 70%),
       radial-gradient(1px 1px at 1px 1px, rgba(148, 163, 184, 0.08) 1px, transparent 0);
+  }
+
+  /* Article pages: keep the glow, drop the dot grid so nothing sits behind long text */
+  .page-bg-article {
+    background-image: radial-gradient(60rem 30rem at 50% -8rem, rgba(0, 174, 239, 0.16), transparent 70%);
+    background-size: 100% 100%;
+  }
+  .dark .page-bg-article {
+    background-image: radial-gradient(60rem 30rem at 50% -8rem, rgba(0, 174, 239, 0.14), transparent 70%);
   }
 
   .text-gradient {
@@ -108,8 +121,10 @@
     @apply prose prose-slate max-w-none dark:prose-invert sm:prose-lg;
     @apply prose-headings:scroll-mt-24 prose-headings:font-extrabold prose-headings:tracking-tight;
     @apply prose-h2:mt-14 prose-h3:mt-10;
-    @apply prose-a:font-medium prose-a:text-blue-600 prose-a:decoration-blue-500/40 prose-a:underline-offset-4 hover:prose-a:decoration-blue-500 dark:prose-a:text-blue-300;
+    @apply prose-a:font-medium prose-a:text-blue-700 prose-a:decoration-blue-500/40 prose-a:underline-offset-4 hover:prose-a:decoration-blue-500 dark:prose-a:text-blue-300;
     @apply prose-strong:text-slate-900 dark:prose-strong:text-white;
+    /* Body text one step darker than prose-slate's slate-700; dark mode keeps prose-invert. */
+    --tw-prose-body: theme("colors.slate.800");
     @apply prose-blockquote:border-l-blue-500 prose-blockquote:font-normal prose-blockquote:not-italic;
     @apply prose-img:rounded-2xl prose-img:border prose-img:border-slate-200 dark:prose-img:border-slate-800;
     @apply prose-hr:border-slate-200 dark:prose-hr:border-slate-800;
